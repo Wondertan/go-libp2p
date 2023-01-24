@@ -46,8 +46,8 @@ func newPeerHandler(pid peer.ID, ids *idService) *peerHandler {
 
 		snapshot: ids.getSnapshot(),
 
-		pushCh:  make(chan struct{}, 1),
-		deltaCh: make(chan struct{}, 1),
+		pushCh:  make(chan struct{}, 16),
+		deltaCh: make(chan struct{}, 16),
 	}
 
 	return ph
