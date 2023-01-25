@@ -780,7 +780,7 @@ func (nn *netNotifiee) IDService() *idService {
 }
 
 func (nn *netNotifiee) Connected(n network.Network, v network.Conn) {
-	nn.IDService().IdentifyWait(v)
+	go nn.IDService().IdentifyWait(v)
 }
 
 func (nn *netNotifiee) Disconnected(n network.Network, v network.Conn) {
