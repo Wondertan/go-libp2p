@@ -373,6 +373,7 @@ func (h *BasicHost) Start() {
 // newStreamHandler is the remote-opened stream handler for network.Network
 // TODO: this feels a bit wonky
 func (h *BasicHost) newStreamHandler(s network.Stream) {
+	log.Debugf("start negotiation: %s,", s.Conn().RemotePeer())
 	before := time.Now()
 
 	if h.negtimeout > 0 {
@@ -381,6 +382,10 @@ func (h *BasicHost) newStreamHandler(s network.Stream) {
 			s.Reset()
 			return
 		}
+	}
+
+	if s.Conn().RemotePeer().String() == "12D3KooWFpRaSJ4eGRJrxoEer358eogwCLBtrTSA4y1kh2hEtJd2" {
+		log.Debugw("gottem")
 	}
 
 	protoID, handle, err := h.Mux().Negotiate(s)
