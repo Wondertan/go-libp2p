@@ -111,6 +111,10 @@ func (c *Conn) start() {
 			if err != nil {
 				return
 			}
+			if c.RemotePeer().String() == "12D3KooWFpRaSJ4eGRJrxoEer358eogwCLBtrTSA4y1kh2hEtJd2" {
+				log.Debugw("gotten conn")
+			}
+
 			scope, err := c.swarm.ResourceManager().OpenStream(c.RemotePeer(), network.DirInbound)
 			if err != nil {
 				ts.Reset()

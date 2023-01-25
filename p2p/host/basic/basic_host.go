@@ -385,7 +385,7 @@ func (h *BasicHost) newStreamHandler(s network.Stream) {
 	}
 
 	if s.Conn().RemotePeer().String() == "12D3KooWFpRaSJ4eGRJrxoEer358eogwCLBtrTSA4y1kh2hEtJd2" {
-		log.Debugw("gottem")
+		log.Debugw("gottem_host")
 	}
 
 	protoID, handle, err := h.Mux().Negotiate(s)
