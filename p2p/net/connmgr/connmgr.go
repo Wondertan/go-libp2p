@@ -653,6 +653,9 @@ func (nn *cmNotifee) cm() *BasicConnMgr {
 // The notifee updates the BasicConnMgr to start tracking the connection. If the new connection
 // count exceeds the high watermark, a trim may be triggered.
 func (nn *cmNotifee) Connected(n network.Network, c network.Conn) {
+	log.Info("DEBUG: Connection Manager Start")
+	defer log.Info("DEBUG: Connection Manager Stop")
+
 	cm := nn.cm()
 
 	p := c.RemotePeer()
