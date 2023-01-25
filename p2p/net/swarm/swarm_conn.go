@@ -103,7 +103,7 @@ func (c *Conn) removeStream(s *Stream) {
 // swarm ref count.
 func (c *Conn) start() {
 	if c.RemotePeer().String() == "12D3KooWFpRaSJ4eGRJrxoEer358eogwCLBtrTSA4y1kh2hEtJd2" {
-		log.Debugw("gotten conn")
+		log.Debugw("gotten conn start")
 	}
 	go func() {
 		defer c.swarm.refs.Done()

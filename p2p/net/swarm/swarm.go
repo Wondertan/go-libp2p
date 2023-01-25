@@ -264,6 +264,10 @@ func (s *Swarm) addConn(tc transport.CapableConn, dir network.Direction) (*Conn,
 		addr = tc.RemoteMultiaddr()
 	)
 
+	if p.String() == "12D3KooWFpRaSJ4eGRJrxoEer358eogwCLBtrTSA4y1kh2hEtJd2" {
+		log.Debugw("gotten conn start add")
+	}
+
 	// create the Stat object, initializing with the underlying connection Stat if available
 	var stat network.ConnStats
 	if cs, ok := tc.(network.ConnStat); ok {
@@ -301,6 +305,9 @@ func (s *Swarm) addConn(tc transport.CapableConn, dir network.Direction) (*Conn,
 	// Clear any backoffs
 	s.backf.Clear(p)
 
+	if p.String() == "12D3KooWFpRaSJ4eGRJrxoEer358eogwCLBtrTSA4y1kh2hEtJd2" {
+		log.Debugw("gotten conn conns lock")
+	}
 	// Finally, add the peer.
 	s.conns.Lock()
 	// Check if we're still online
@@ -318,6 +325,9 @@ func (s *Swarm) addConn(tc transport.CapableConn, dir network.Direction) (*Conn,
 	// * The other will be decremented when Conn.start exits.
 	s.refs.Add(2)
 
+	if p.String() == "12D3KooWFpRaSJ4eGRJrxoEer358eogwCLBtrTSA4y1kh2hEtJd2" {
+		log.Debugw("gotten conn notify lock")
+	}
 	// Take the notification lock before releasing the conns lock to block
 	// Disconnect notifications until after the Connect notifications done.
 	c.notifyLk.Lock()
@@ -327,6 +337,9 @@ func (s *Swarm) addConn(tc transport.CapableConn, dir network.Direction) (*Conn,
 		f.Connected(s, c)
 	})
 	c.notifyLk.Unlock()
+	if p.String() == "12D3KooWFpRaSJ4eGRJrxoEer358eogwCLBtrTSA4y1kh2hEtJd2" {
+		log.Debugw("gotten conn start end")
+	}
 
 	c.start()
 	return c, nil
