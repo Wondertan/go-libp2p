@@ -17,8 +17,10 @@ func (as *AmbientAutoNAT) ListenClose(net network.Network, a ma.Multiaddr) {}
 
 // Connected is part of the network.Notifiee interface
 func (as *AmbientAutoNAT) Connected(net network.Network, c network.Conn) {
-	log.Info("DEBUG: Host Events Start")
-	defer log.Info("DEBUG: Host Events Stop")
+	if c.RemotePeer().String() == "12D3KooWFpRaSJ4eGRJrxoEer358eogwCLBtrTSA4y1kh2hEtJd2" {
+		log.Info("DEBUG: AutoNat Events Start")
+		defer log.Info("DEBUG: AutoNat Events Stop")
+	}
 
 	if c.Stat().Direction == network.DirInbound &&
 		manet.IsPublicAddr(c.RemoteMultiaddr()) {

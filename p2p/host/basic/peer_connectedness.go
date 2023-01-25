@@ -40,8 +40,11 @@ func (w *peerConnectWatcher) Disconnected(n network.Network, conn network.Conn) 
 }
 
 func (w *peerConnectWatcher) handleTransition(p peer.ID, state network.Connectedness) {
-	log.Info("DEBUG: Host Events Start")
-	defer log.Info("DEBUG: Host Events Stop")
+	if p.String() == "12D3KooWFpRaSJ4eGRJrxoEer358eogwCLBtrTSA4y1kh2hEtJd2" {
+		log.Info("DEBUG: Host Events Start")
+		defer log.Info("DEBUG: Host Events Stop")
+	}
+
 
 	if changed := w.checkTransition(p, state); !changed {
 		return
