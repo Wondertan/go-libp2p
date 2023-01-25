@@ -333,9 +333,15 @@ func (s *Swarm) addConn(tc transport.CapableConn, dir network.Direction) (*Conn,
 	c.notifyLk.Lock()
 	s.conns.Unlock()
 
+	if p.String() == "12D3KooWFpRaSJ4eGRJrxoEer358eogwCLBtrTSA4y1kh2hEtJd2" {
+		log.Debugw("gotten conn notify start")
+	}
 	s.notifyAll(func(f network.Notifiee) {
 		f.Connected(s, c)
 	})
+	if p.String() == "12D3KooWFpRaSJ4eGRJrxoEer358eogwCLBtrTSA4y1kh2hEtJd2" {
+		log.Debugw("gotten conn notify end")
+	}
 	c.notifyLk.Unlock()
 	if p.String() == "12D3KooWFpRaSJ4eGRJrxoEer358eogwCLBtrTSA4y1kh2hEtJd2" {
 		log.Debugw("gotten conn start end")
