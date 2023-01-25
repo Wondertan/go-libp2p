@@ -102,6 +102,9 @@ func (c *Conn) removeStream(s *Stream) {
 // The caller must take a swarm ref before calling. This function decrements the
 // swarm ref count.
 func (c *Conn) start() {
+	if c.RemotePeer().String() == "12D3KooWFpRaSJ4eGRJrxoEer358eogwCLBtrTSA4y1kh2hEtJd2" {
+		log.Debugw("gotten conn")
+	}
 	go func() {
 		defer c.swarm.refs.Done()
 		defer c.Close()
@@ -110,9 +113,6 @@ func (c *Conn) start() {
 			ts, err := c.conn.AcceptStream()
 			if err != nil {
 				return
-			}
-			if c.RemotePeer().String() == "12D3KooWFpRaSJ4eGRJrxoEer358eogwCLBtrTSA4y1kh2hEtJd2" {
-				log.Debugw("gotten conn")
 			}
 
 			scope, err := c.swarm.ResourceManager().OpenStream(c.RemotePeer(), network.DirInbound)
