@@ -320,13 +320,15 @@ func (s *Swarm) addConn(tc transport.CapableConn, dir network.Direction) (*Conn,
 
 	// Take the notification lock before releasing the conns lock to block
 	// Disconnect notifications until after the Connect notifications done.
-	c.notifyLk.Lock()
-	s.conns.Unlock()
+	go func() {
+		c.notifyLk.Lock()
+		s.conns.Unlock()
 
-	s.notifyAll(func(f network.Notifiee) {
-		f.Connected(s, c)
-	})
-	c.notifyLk.Unlock()
+		s.notifyAll(func(f network.Notifiee) {
+			f.Connected(s, c)
+		})
+		c.notifyLk.Unlock()
+	}()
 
 	c.start()
 	return c, nil
