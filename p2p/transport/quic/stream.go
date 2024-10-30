@@ -2,10 +2,9 @@ package libp2pquic
 
 import (
 	"errors"
-
 	"github.com/libp2p/go-libp2p/core/network"
-
 	"github.com/quic-go/quic-go"
+	"sync"
 )
 
 const (
@@ -14,6 +13,7 @@ const (
 
 type stream struct {
 	quic.Stream
+	sync.Once
 }
 
 var _ network.MuxedStream = &stream{}
@@ -40,16 +40,17 @@ func (s *stream) Reset() error {
 	return nil
 }
 
-func (s *stream) Close() error {
-	s.Stream.CancelRead(reset)
-	return s.Stream.Close()
+func (s *stream) Close() (err error) {
+	s.Do(func() {
+		err = s.Stream.Close()
+	})
+	return err
 }
 
 func (s *stream) CloseRead() error {
-	s.Stream.CancelRead(reset)
 	return nil
 }
 
 func (s *stream) CloseWrite() error {
-	return s.Stream.Close()
+	return s.Close()
 }
